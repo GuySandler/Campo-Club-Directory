@@ -1,11 +1,21 @@
 <script>
     import { Textarea, Select, Label, Input, GradientButton, P, Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
     import campo from "../../lib/campo.svg"
+    import { AddClub, GetOwnedClubs } from "../../firebaseTools"
+    import { userEmail } from '../../stores';
     let page = 0;
     function add() {page = 1;}
     function update() {page = 2;}
     function submitadd() {
         submited = true;
+        AddClub(name, disc, where, when, type, email);
+    }
+    function submitup() {
+        submited2 = true;
+        if (club == "No Clubs"){
+            alert("no club selected/found, please select a club")
+        }
+        AddClub(name, disc, where, when, type, email);
     }
     let types = [
         { value: 'academic', name: 'Academic Club' },
@@ -22,9 +32,13 @@
     let disc = "";
     let email = "";
     let submited = false;
-    let passcode = "";
-
-    let passcorrect = false;
+    let submited2 = false;
+    let userEmailSub = "";
+    let club = "";
+    userEmail.subscribe((value) => {
+	    userEmailSub = value;
+    });
+    let getOwned = GetOwnedClubs(userEmailSub);
 </script>
 <Navbar style="background-color:#44ddc8;" let:hidden let:toggle>
     <NavBrand href="/">
@@ -80,42 +94,44 @@
         {#if submited == true}
             <P size="xl" align="center" style="margin-bottom:10px;">Thank you for submitting a club</P>
             <P align="center" style="margin-bottom:10px;">Your club will be added to the list soon</P>
-            <P align="center" style="margin-bottom:10px;"><strong>Remember this passcode</strong> to edit your club later, if you forgot it <strong>TOO BAD</strong>: {passcode}</P>
         {/if}
     </div>
     {/if}
     {#if page == 2}
-    <div style="width:75%;padding-top:30px;padding-bottom:30px;position:relative;top:5vh;border:1px black solid;border-radius:15px;margin-bottom:75px;">
-        {#if passcorrect == false}
+        <div style="width:75%;padding-top:30px;padding-bottom:30px;position:relative;top:5vh;border:1px black solid;border-radius:15px;margin-bottom:75px;">
             <P size="xl" align="center" style="margin-bottom:10px;">Update a Club</P>
-            <br>
-        {/if}
-        {#if passcorrect == true}
-            <Label class="space-y-2 mb-5">
-                <span>Name of club</span>
-                <Input bind:value={name} style="width:30%;" placeholder="name" />
-            </Label>
-            <Label class="inline-block mr-5 space-y-2">
-                <span>Where do you meet?</span>
-                <Input bind:value={where} style="width:100%;" placeholder="room 10" />
-            </Label>
-            <Label class="inline-block ml-5 space-y-2">
-                <span>When do you meet?</span>
-                <Input bind:value={when} style="width:100%;" placeholder="Fidays at lunch" />
-            </Label>
-            <br>
-            <span>Club Type</span>
-            <Select bind:value={type} id="types" style="width:50%;" underline class="mt-2" items={types} />
-            <br>
-            <Textarea bind:value={disc} style="width:75%;" placeholder="Discription of club" rows="4" name="message" />
-            <br>
-            <Label class="inline-block ml-5 space-y-2">
-                <span>Contact Email</span>
-                <Input bind:value={email} type="email" pattern="[^ @]*@[^ @]*" style="width:100%;" placeholder="Email" />
-            </Label>
-            <br>
-            <GradientButton style="margin-top:10px;" on:click={submitadd} color="green">Submit</GradientButton>
-        {/if}
-    </div>
+            {#await getOwned}
+                <p>...waiting</p>
+            {:then Owned}
+                <Select style="width:50%;" bind:value={club} underline class="mt-2" items={Owned} />
+                <br>
+                <Label class="space-y-2 mb-5">
+                    <span>Name of club</span>
+                    <Input bind:value={name} style="width:30%;" placeholder="name" />
+                </Label>
+                <Label class="inline-block mr-5 space-y-2">
+                    <span>Where do you meet?</span>
+                    <Input bind:value={where} style="width:100%;" placeholder="room 10" />
+                </Label>
+                <Label class="inline-block ml-5 space-y-2">
+                    <span>When do you meet?</span>
+                    <Input bind:value={when} style="width:100%;" placeholder="Fidays at lunch" />
+                </Label>
+                <br>
+                <span>Club Type</span>
+                <Select bind:value={type} id="types" style="width:50%;" underline class="mt-2" items={types} />
+                <br>
+                <Textarea bind:value={disc} style="width:75%;" placeholder="Discription of club" rows="4" name="message" />
+                <br>
+                <Label class="inline-block ml-5 space-y-2">
+                    <span>Contact Email</span>
+                    <Input bind:value={email} type="email" pattern="[^ @]*@[^ @]*" style="width:100%;" placeholder="Email" />
+                </Label>
+                <br>
+                <GradientButton style="margin-top:10px;" on:click={submitadd} color="green">Submit</GradientButton>
+            {:catch error}
+                <p style="color: red">{error.message}</p>
+            {/await}
+        </div>
     {/if}
 </center>
