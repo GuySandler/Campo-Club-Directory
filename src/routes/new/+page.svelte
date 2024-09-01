@@ -1,17 +1,11 @@
 <script>
     import { Textarea, Select, Label, Input, GradientButton, P, Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
     import campo from "../../lib/campo.svg"
-    import generator from 'generate-password-ts';
     let page = 0;
     function add() {page = 1;}
     function update() {page = 2;}
     function submitadd() {
-        // alert("submitted");
-        passgen();
         submited = true;
-    }
-    function passgen() {
-        passcode = generator.generate({length: 10,numbers: true, symbols: true, uppercase: true, lowercase: true})
     }
     let types = [
         { value: 'academic', name: 'Academic Club' },

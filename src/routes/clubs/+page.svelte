@@ -15,3 +15,68 @@
         <NavLi href="/about">About</NavLi>
     </NavUl>
 </Navbar>
+<center>
+    <div style="border:2px solid black;border-radius:10px;width:80%;height:100%;padding:10px;margin-top:20px;margin-bottom:20px;">
+        <button class="club">
+            <h1 class="clubName">Club 1</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 2</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 3</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 4</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 5</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 6</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 7</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 8</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 9</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+        <button class="club">
+            <h1 class="clubName">Club 10</h1>
+            <h1 class="clubDisc">desc</h1>
+        </button>
+    </div>
+</center>
+<style>
+    .clubName {
+        float: left;
+        display: inline;
+        margin-left: 5px;
+    }
+    .clubDisc {
+        float: right;
+        display: inline;
+        margin-right: 5px;
+    }
+    .club {
+        border:2px solid black;
+        border-radius:5px;
+        width:90%;
+        margin-top:5px;
+        margin-bottom:5px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+    }
+</style>
