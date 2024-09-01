@@ -36,6 +36,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"flowbite-svelte-icons": "^0.4.3"
+		"firebase": "^10.4.0",
+		"flowbite-svelte-icons": "^0.4.3",
+		"generate-password-ts": "^1.6.5"
 	}
 }
